@@ -1,31 +1,93 @@
+//set up telebot api
 const TeleBot = require('telebot');
+const keys = require('./keys.js');
+const weatherKey = keys.weather;
+const telekey = keys.telegram;
+
+
+//handle promises using a third-party module
 const promise = require('make-promises-safe')
+
+//set up weather api
 var weather = require('openweather-apis');
-const bot = new TeleBot('659101762:AAH2EkRouw5QbPOCk8QLaI873B8ddSzqZ0c');
+
+//set up telebot
+const bot = new TeleBot(telekey);
+
+//set up weather data
 weather.setLang('en')
-weather.setCity('London')
+weather.setCity('New York')
 weather.setUnits('metric')
-weather.setAPPID('fe4868ad1d7a80ef76f097e0561fa4b2')
+weather.setAPPID(weatherKey)
+
+//set up twitter api
+var Twit = require('twit')
+var config = require('./twitconfig')
+var T = new Twit(config)
+
+//set up rss service
+// let RssFeedEmitter = require('rss-feed-emitter');
+// let feeder = new RssFeedEmitter();
+
+//set up fetch
+const fetch = require('node-fetch')
+
+//set up google news
+const googleNews = keys.google;
 
 
+// feeder.add({
+//     url: 'http://www.nintendolife.com/feeds/news',
+//     refresh: 2000
+//   });
+//   console.log(feeder.list())
 
-bot.on('text', (msg) => msg.reply.text(msg.text));
+bot.on('text', (msg) => msg.reply.text('Received'));
 bot.on(['/start', '/hello'], (msg) => {
     return bot.sendMessage(msg.from.id, 'Bam!');
 });
 
 bot.on('/weather', (msg) => {
-    // return bot.sendMessage(getWeather());
     getWeather(msg);
+    weatherDesc(msg);
+});
+
+bot.on('/news', (msg) => {
+    getNews(msg);
+});
+
+bot.on(/^\/twitter (.+)$/, (msg, props) => {
+    const text = props.match[1];
+    T.post('statuses/update', { status: text }, function(err, data, response) {
+        console.log(data)
+      })
+    return bot.sendMessage(msg.from.id, 'Twitter Posted!', { replyToMessage: msg.message_id });
 });
 
 function getWeather(message) {
     weather.getTemperature(function (err, temp) {
 
-        console.log(typeof temp);
-        return bot.sendMessage(message.from.id, temp);
+        // console.log(typeof temp);
+        return bot.sendMessage(message.from.id, 'Current temperature in New York City is '+temp+' ℃');
     })
 
+}
+
+function weatherDesc(message){
+    weather.getDescription(function(err, desc){
+        console.log(desc);
+        return bot.sendMessage(message.from.id, 'The weather condition is '+desc);
+    });
+}
+
+function getNews(message){
+    fetch(googleNews)
+    .then((resp) => resp.json())
+    .then(data => {
+        var url = data.articles[0].url;
+        // console.log(url);
+        return bot.sendMessage(message.from.id, url);
+    })
 }
 
 // bot.on('/weather',(msg)=>{
