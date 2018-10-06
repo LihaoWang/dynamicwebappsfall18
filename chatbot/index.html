@@ -20,7 +20,11 @@
 
 <script>
 $(()=>{
-    console.log('loaded')
+    $("#send").click(()=>{
+        addMessages({name:'Leo',message:'hello'})
+    })
 })
-function
+function addMessages(message){
+    $("#messages").append(`<h4> ${message.name} </h4> <p> ${message.message} </p>`)
+}
 </script>
