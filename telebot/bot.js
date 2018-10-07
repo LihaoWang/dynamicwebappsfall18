@@ -35,6 +35,9 @@ const fetch = require('node-fetch')
 //set up google news
 const googleNews = keys.google;
 
+//set up Giphy api
+const giphy = keys.giphy
+const trending = keys.trendingGif
 
 // feeder.add({
 //     url: 'http://www.nintendolife.com/feeds/news',
@@ -42,7 +45,16 @@ const googleNews = keys.google;
 //   });
 //   console.log(feeder.list())
 
-bot.on('text', (msg) => msg.reply.text('Received'));
+// bot.on('text', (msg) => msg.reply.text('Received'));
+bot.on('text', (msg) => {
+    fetch(trending)
+    .then ((resp)=>resp.json())
+    .then (function(data){
+        var pic = data.data[Math.floor(Math.random() * 20)].images.original.url
+        console.log(pic)
+        return bot.sendSticker(msg.from.id, pic);
+    })
+});
 bot.on(['/start', '/hello'], (msg) => {
     return bot.sendMessage(msg.from.id, 'Bam!');
 });
@@ -59,10 +71,15 @@ bot.on('/news', (msg) => {
 bot.on(/^\/twitter (.+)$/, (msg, props) => {
     const text = props.match[1];
     T.post('statuses/update', { status: text }, function(err, data, response) {
-        console.log(data)
+        // console.log(data)
       })
     return bot.sendMessage(msg.from.id, 'Twitter Posted!', { replyToMessage: msg.message_id });
 });
+
+bot.on('/gif',(msg)=>{
+    getGif(msg);
+})
+
 
 function getWeather(message) {
     weather.getTemperature(function (err, temp) {
@@ -75,7 +92,7 @@ function getWeather(message) {
 
 function weatherDesc(message){
     weather.getDescription(function(err, desc){
-        console.log(desc);
+        // console.log(desc);
         return bot.sendMessage(message.from.id, 'The weather condition is '+desc);
     });
 }
@@ -87,6 +104,16 @@ function getNews(message){
         var url = data.articles[0].url;
         // console.log(url);
         return bot.sendMessage(message.from.id, url);
+    })
+}
+
+function getGif(message){
+    fetch(giphy)
+    .then ((resp)=>resp.json())
+    .then (function(data){
+        var pic = data.data[Math.floor(Math.random() * 20)].images.original.url
+        console.log(pic)
+        return bot.sendSticker(message.from.id, pic);
     })
 }
 
