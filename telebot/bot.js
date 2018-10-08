@@ -25,6 +25,9 @@ var Twit = require('twit')
 var config = require('./twitconfig')
 var T = new Twit(config)
 
+//set up random quote npm
+const randomQuote = require('forismatic-node')();
+
 //set up rss service
 // let RssFeedEmitter = require('rss-feed-emitter');
 // let feeder = new RssFeedEmitter();
@@ -45,18 +48,27 @@ const trending = keys.trendingGif
 //   });
 //   console.log(feeder.list())
 
-// bot.on('text', (msg) => msg.reply.text('Received'));
-bot.on('text', (msg) => {
+bot.on('text', (msg) => msg.reply.text('Received'));
+
+bot.on('/quote', (msg) => {
+    getQuote(msg);
+});
+bot.on('sticker', (msg) => {
     fetch(trending)
     .then ((resp)=>resp.json())
     .then (function(data){
         var pic = data.data[Math.floor(Math.random() * 20)].images.original.url
-        console.log(pic)
+        // console.log(pic)
         return bot.sendSticker(msg.from.id, pic);
     })
 });
 bot.on(['/start', '/hello'], (msg) => {
-    return bot.sendMessage(msg.from.id, 'Bam!');
+    return bot.sendMessage(msg.from.id, `Hello there! I'm your personal assistant. 
+/weather to see today's weather
+/news to see today's headline in Google News
+/twitter <content> to post a status on twitter
+/gif to get a funny cat sticker on Giphy
+Also, send me a sticker, and I will reply you with another sticker`);
 });
 
 bot.on('/weather', (msg) => {
@@ -80,6 +92,15 @@ bot.on('/gif',(msg)=>{
     getGif(msg);
 })
 
+function getQuote(message){
+    randomQuote.getQuote(function (err, quote) {
+
+            console.log(quote.quoteText);
+            return bot.sendMessage(message.from.id, quote.quoteText)
+        } 
+    );
+
+}
 
 function getWeather(message) {
     weather.getTemperature(function (err, temp) {
