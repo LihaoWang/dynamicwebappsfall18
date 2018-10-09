@@ -55,12 +55,12 @@ bot.on('/quote', (msg) => {
 });
 bot.on('sticker', (msg) => {
     fetch(trending)
-    .then ((resp)=>resp.json())
-    .then (function(data){
-        var pic = data.data[Math.floor(Math.random() * 20)].images.original.url
-        // console.log(pic)
-        return bot.sendSticker(msg.from.id, pic);
-    })
+        .then((resp) => resp.json())
+        .then(function (data) {
+            var pic = data.data[Math.floor(Math.random() * 20)].images.original.url
+            // console.log(pic)
+            return bot.sendSticker(msg.from.id, pic);
+        })
 });
 bot.on(['/start', '/hello'], (msg) => {
     return bot.sendMessage(msg.from.id, `Hello there! I'm your personal assistant. 
@@ -82,23 +82,26 @@ bot.on('/news', (msg) => {
 
 bot.on(/^\/twitter (.+)$/, (msg, props) => {
     const text = props.match[1];
-    T.post('statuses/update', { status: text }, function(err, data, response) {
+    T.post('statuses/update', {
+        status: text
+    }, function (err, data, response) {
         // console.log(data)
-      })
-    return bot.sendMessage(msg.from.id, 'Twitter Posted!', { replyToMessage: msg.message_id });
+    })
+    return bot.sendMessage(msg.from.id, 'Twitter Posted!', {
+        replyToMessage: msg.message_id
+    });
 });
 
-bot.on('/gif',(msg)=>{
+bot.on('/gif', (msg) => {
     getGif(msg);
 })
 
-function getQuote(message){
+function getQuote(message) {
     randomQuote.getQuote(function (err, quote) {
 
-            console.log(quote.quoteText);
-            return bot.sendMessage(message.from.id, quote.quoteText)
-        } 
-    );
+        console.log(quote.quoteText);
+        return bot.sendMessage(message.from.id, quote.quoteText)
+    });
 
 }
 
@@ -106,36 +109,36 @@ function getWeather(message) {
     weather.getTemperature(function (err, temp) {
 
         // console.log(typeof temp);
-        return bot.sendMessage(message.from.id, 'Current temperature in New York City is '+temp+' ℃');
+        return bot.sendMessage(message.from.id, 'Current temperature in New York City is ' + temp + ' ℃');
     })
 
 }
 
-function weatherDesc(message){
-    weather.getDescription(function(err, desc){
+function weatherDesc(message) {
+    weather.getDescription(function (err, desc) {
         // console.log(desc);
-        return bot.sendMessage(message.from.id, 'The weather condition is '+desc);
+        return bot.sendMessage(message.from.id, 'The weather condition is ' + desc);
     });
 }
 
-function getNews(message){
+function getNews(message) {
     fetch(googleNews)
-    .then((resp) => resp.json())
-    .then(data => {
-        var url = data.articles[0].url;
-        // console.log(url);
-        return bot.sendMessage(message.from.id, url);
-    })
+        .then((resp) => resp.json())
+        .then(data => {
+            var url = data.articles[0].url;
+            // console.log(url);
+            return bot.sendMessage(message.from.id, url);
+        })
 }
 
-function getGif(message){
+function getGif(message) {
     fetch(giphy)
-    .then ((resp)=>resp.json())
-    .then (function(data){
-        var pic = data.data[Math.floor(Math.random() * 20)].images.original.url
-        console.log(pic)
-        return bot.sendSticker(message.from.id, pic);
-    })
+        .then((resp) => resp.json())
+        .then(function (data) {
+            var pic = data.data[Math.floor(Math.random() * 20)].images.original.url
+            console.log(pic)
+            return bot.sendSticker(message.from.id, pic);
+        })
 }
 
 // bot.on('/weather',(msg)=>{
