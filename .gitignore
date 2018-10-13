@@ -1,3 +1,5 @@
 twitter/config.js
 telebot/twitconfig.js
 telebot/keys.js
+telebot/token.json
+telebot/credentials.json
