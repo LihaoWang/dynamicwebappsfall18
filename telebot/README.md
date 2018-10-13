@@ -17,5 +17,8 @@ Reply the next 10 events in Google Calender (using [Google Calender API](https:/
 ### /gif
 Reply a funny cat GIF (using [Giphy API](https://developers.giphy.com/docs/))
 
+### /quote
+Reply a random quote (using[forismatic API](https://www.npmjs.com/package/forismatic-node))
+
 ### Sticker
 Reply a trending GIF when receiving a sticker (using [Giphy API](https://developers.giphy.com/docs/))
