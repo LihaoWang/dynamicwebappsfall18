@@ -69,6 +69,7 @@ bot.on(['/start', '/hello'], (msg) => {
 /twitter to post a status
 /gif to get a funny cat sticker
 /calender to see next 10 events
+/quote to get a random quote
 Send me a sticker, you'll get a surprise`);
 });
 
