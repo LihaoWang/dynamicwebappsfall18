@@ -28,7 +28,7 @@ var T = new Twit(config)
 //set up random quote npm
 const randomQuote = require('forismatic-node')();
 
-//set up rss service
+//set up rss service (not working)
 // let RssFeedEmitter = require('rss-feed-emitter');
 // let feeder = new RssFeedEmitter();
 
@@ -50,18 +50,23 @@ const trending = keys.trendingGif
 
 bot.on('text', (msg) => msg.reply.text('Received'));
 
+// reply a random quote
 bot.on('/quote', (msg) => {
     getQuote(msg);
 });
+
+//reply a random sticker when receiving a sticker
 bot.on('sticker', (msg) => {
     fetch(trending)
         .then((resp) => resp.json())
         .then(function (data) {
-            var pic = data.data[Math.floor(Math.random() * 20)].images.original.url
+            var pic = data.data[Math.floor(Math.random() * 20)].images.downsized.url
             console.log(pic)
             return bot.sendSticker(msg.from.id, pic);
         })
 });
+
+//giving the user instruction
 bot.on(['/start', '/hello'], (msg) => {
     return bot.sendMessage(msg.from.id, `Hi there! I'm your personal assistant. 
 /weather to see today's weather
@@ -73,15 +78,18 @@ bot.on(['/start', '/hello'], (msg) => {
 Send me a sticker, you'll get a surprise`);
 });
 
+//reply weather condition and temperature
 bot.on('/weather', (msg) => {
     getWeather(msg);
     weatherDesc(msg);
 });
 
+//reply the top news on Google News
 bot.on('/news', (msg) => {
     getNews(msg);
 });
 
+//post a status on twitter
 bot.on(/^\/twitter (.+)$/, (msg, props) => {
     const text = props.match[1];
     T.post('statuses/update', {
@@ -94,10 +102,12 @@ bot.on(/^\/twitter (.+)$/, (msg, props) => {
     });
 });
 
+//reply a random funny cat sticker
 bot.on('/gif', (msg) => {
     getGif(msg);
 })
 
+//using an NPM package to get a random quote and reply it back to the user
 function getQuote(message) {
     randomQuote.getQuote(function (err, quote) {
 
@@ -107,6 +117,7 @@ function getQuote(message) {
 
 }
 
+//using open weather map api to get temperature and reply it back to the user
 function getWeather(message) {
     weather.getTemperature(function (err, temp) {
 
@@ -115,7 +126,7 @@ function getWeather(message) {
     })
 
 }
-
+//using open weather map api to get weather condition and reply it back to the user
 function weatherDesc(message) {
     weather.getDescription(function (err, desc) {
         // console.log(desc);
@@ -123,6 +134,7 @@ function weatherDesc(message) {
     });
 }
 
+//using google news api to get the top news and reply it back to the user
 function getNews(message) {
     fetch(googleNews)
         .then((resp) => resp.json())
@@ -133,6 +145,7 @@ function getNews(message) {
         })
 }
 
+//using Giphy api to get a random funny cat gif and reply it back to the user
 function getGif(message) {
     fetch(giphy)
         .then((resp) => resp.json())
@@ -157,6 +170,8 @@ function getGif(message) {
 //     })
 // }
 
+//following code is copied from Google calender api example, I didn't fully understand it. But at least it's working.
+//the authorization is done in the console, so it is only connected to my personal account
 const fs = require('fs');
 const readline = require('readline');
 const {
@@ -261,7 +276,5 @@ function listEvents(auth) {
     });
 }
 
-
-
-
+//start the telebot
 bot.start();
