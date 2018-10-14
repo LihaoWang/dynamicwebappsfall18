@@ -17,7 +17,7 @@ Reply the headline on Google News (using [Google News API](https://newsapi.org/s
 
 ### /calendar
 ![](/telebot/image/calender.png)
-Reply the next 10 events in Google Calender (using [Google Calendar API](https://developers.google.com/calendar/quickstart/nodejs))
+Reply the next 10 events in Google Calendar (using [Google Calendar API](https://developers.google.com/calendar/quickstart/nodejs))
 
 ### /gif
 ![](/telebot/image/gif.png)
