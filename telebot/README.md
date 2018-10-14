@@ -1,6 +1,7 @@
 # Yet Another Telegram Bot
 This is a simple Telegram bot that provides useful information to user. The goal is to make users' life easier.
 
+[Link to the bot](https://t.me/leowangbot)
 ## Usage
 ### /weather
 ![](/telebot/image/weather.png)
