@@ -15,9 +15,9 @@ Post the text following the command on Twitter (using [twit](https://www.npmjs.c
 ![](/telebot/image/news.png)
 Reply the headline on Google News (using [Google News API](https://newsapi.org/s/google-news-api))
 
-### /calender
+### /calendar
 ![](/telebot/image/calender.png)
-Reply the next 10 events in Google Calender (using [Google Calender API](https://developers.google.com/calendar/quickstart/nodejs))
+Reply the next 10 events in Google Calender (using [Google Calendar API](https://developers.google.com/calendar/quickstart/nodejs))
 
 ### /gif
 ![](/telebot/image/gif.png)
