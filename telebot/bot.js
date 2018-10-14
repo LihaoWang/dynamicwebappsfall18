@@ -73,7 +73,7 @@ bot.on(['/start', '/hello'], (msg) => {
 /news to see today's headline in Google News
 /twitter to post a status
 /gif to get a funny cat sticker
-/calender to see next 10 events
+/calendar to see next 10 events
 /quote to get a random quote
 Send me a sticker, you'll get a surprise`);
 });
@@ -111,7 +111,7 @@ bot.on('/gif', (msg) => {
 function getQuote(message) {
     randomQuote.getQuote(function (err, quote) {
 
-        console.log(message.from.id);
+        // console.log(message.from.id);
         return bot.sendMessage(message.from.id, quote.quoteText)
     });
 
@@ -182,7 +182,7 @@ const {
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
 const TOKEN_PATH = 'token.json';
 
-bot.on('/calender', (msg) => {
+bot.on('/calendar', (msg) => {
     // Load client secrets from a local file.
     fs.readFile('credentials.json', (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
