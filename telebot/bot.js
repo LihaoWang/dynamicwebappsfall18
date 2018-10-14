@@ -48,7 +48,7 @@ const trending = keys.trendingGif
 //   });
 //   console.log(feeder.list())
 
-bot.on('text', (msg) => msg.reply.text('Received'));
+// bot.on('text', (msg) => msg.reply.text('Received'));
 
 // reply a random quote
 bot.on('/quote', (msg) => {
