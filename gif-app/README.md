@@ -1,9 +1,16 @@
 # Usage
+## Install NPM packages
+```
 npm install express
+
 npm install ejs
+
 npm install body-parser
+
 npm install request
-
-put your own GIPHY api in keys.js
-
+```
+## Put your own GIPHY api in keys.js file
+## Run the app on localhost:3000
+```
 node index.js
+```
