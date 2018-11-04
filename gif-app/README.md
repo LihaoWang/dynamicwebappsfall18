@@ -1,3 +1,5 @@
+# Feature
+This app returns a random gif on GIPHY based on user input.
 # Usage
 ## Install NPM packages
 ```
