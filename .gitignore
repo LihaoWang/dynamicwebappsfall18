@@ -6,3 +6,7 @@ telebot/credentials.json
 telebot/node_modules
 1018/node_modules
 1023/node_modules
+ejs-exercise/node_modules
+gif-app/node_modules
+weather-app/node_modules
+gif-app/keys.js
