@@ -1,2 +1,0 @@
-test
-how to use
