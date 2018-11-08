@@ -23,33 +23,36 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <ul class="nav justify-content-end">
-                <li class="nav-item">
-                  <a class="nav-link active" href="/signup">Sign Up</a>
-                </li>
-              </ul>
+            <li class="nav-item">
+                <a class="nav-link active" href="/signup">Sign Up</a>
+            </li>
+        </ul>
     </nav>
     <div class="container">
-        <div class="row justify-content-md-center">
-            <form action="/" method="post">
-                <div class="input-group mb-3 mt-5">
-                    <input name="search" type="text" class="form-control" placeholder="Enter a Word"required>
-                    <input type="submit" class="btn btn-outline-secondary ml-3" value="Search">
-                </div>
+        <div class=" row justify-content-md-center mt-3">
+            <form action="/signup" method="post">
+
+                <input name="name" type="text" class="form-control col" placeholder="Enter your username" required>
+                <input name="password" type="text" class="form-control col mt-3" placeholder="Enter your password"
+                    required>
+                <input type="submit" class="btn btn-outline-secondary col-5 mt-3" value="Sign Up">
+
             </form>
         </div>
 
         <div class="row justify-content-md-center mt-5">
-            <% if(gifUrl !== null){ %>
-            <img src='<%= gifUrl %>' />
-            <% } %>
-            <% if(error !== null){ %>
-            <p>
-                <%= error %>
-            </p>
+
+            <% if(error == null){ %>
+
+
+
+            <h2>
+            <%= msg %>
+            </h2>
             <% } %>
         </div>
     </div>
-    <p class="row justify-content-md-center mt-2">Powered by GIPHY</p>
+
 </body>
 
 </html>

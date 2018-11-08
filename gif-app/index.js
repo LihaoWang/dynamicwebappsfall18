@@ -6,7 +6,10 @@ var bodyParser = require('body-parser')
 const keys = require('./keys.js')
 
 const apiKey = keys.giphy
-console.log(apiKey)
+
+var fs =require('fs')
+var data = fs.readFileSync('user.json')
+var user = JSON.parse(data)
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,6 +39,26 @@ app.post('/', function (req, res) {
     }
   });
 })
+
+app.get('/signup',function(req,res){
+    res.render('signup', {msg: null, error: null});
+})
+
+app.post('/signup',function(req,res){
+    var name = req.body.name
+    var password = req.body.password
+    user[name]=password
+    var userdata = JSON.stringify(user)
+    fs.writeFile('user.json',userdata,finished)
+    if(password != undefined){
+        res.render('signup', {msg: 'Sign up successfully!', error: null});
+    }
+})
+
+function finished(err) {
+    console.log('all set')
+    
+} 
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
